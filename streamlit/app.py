@@ -198,13 +198,13 @@ if(models):
             
             if(inp_text):
                 if dataset=="nelagt" and option == "article_transformers":
-                    with open('E:\\pramu\\projects\\ire_final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\nelagt\\nela-gt-article-cascadingRoberta-epoch2.pt','rb') as f:
+                    with open('E:\\pramu\\projects\\final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\nelagt\\nela-gt-article-cascadingRoberta-epoch2.pt','rb') as f:
                         PYTORCH_ARTICLE_TRANSFORMERS_MODEL = torch.load(f, map_location = DEVICE)
 
                     predicted = article_transformer(inp_text)
                     predicted
                 elif dataset=="nelagt" and option == "rnn_lstm":
-                    new_model = tf.keras.models.load_model('E:\\pramu\\projects\\ire_final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\nelagt\\rnn_lstm_v1.tf')
+                    new_model = tf.keras.models.load_model('E:\\pramu\\projects\\final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\nelagt\\rnn_lstm_v1.tf')
                     pred = new_model.predict_classes(np.array([inp_text]))
                     print(pred)
                     if pred == 0:
@@ -213,13 +213,13 @@ if(models):
                         pred = "unreliabe"
                     pred
                 elif dataset=="covid" and option == "covid-roberta":
-                    with open('E:\\pramu\\projects\\ire_final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\covid\\covid-roberta.pt','rb') as f:
+                    with open('E:\\pramu\\projects\\final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\covid\\covid-roberta.pt','rb') as f:
                         PYTORCH_ARTICLE_TRANSFORMERS_MODEL = torch.load(f, map_location = DEVICE)
 
                     predicted = article_transformer(inp_text)
                     predicted
                 elif dataset == "covid" and option == "nela-gt-title-roberta":
-                    with open('E:\\pramu\\projects\\ire_final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\nelagt\\nela-gt-title-roberta.pt','rb') as f:
+                    with open('E:\\pramu\\projects\\final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\nelagt\\nela-gt-title-roberta.pt','rb') as f:
                         PYTORCH_ARTICLE_TRANSFORMERS_MODEL = torch.load(f, map_location = DEVICE)
 
                     predicted = article_transformer(inp_text)
@@ -256,7 +256,7 @@ if(models):
                 if dataset=="nelagt":
                     totalData = pd.read_csv('../nela10.csv')
                     if(option == "article_transformers"):
-                        with open('E:\\pramu\\projects\\ire_final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\nelagt\\nela-gt-article-cascadingRoberta-epoch2.pt','rb') as f:
+                        with open('E:\\pramu\\projects\\final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\nelagt\\nela-gt-article-cascadingRoberta-epoch2.pt','rb') as f:
                             PYTORCH_ARTICLE_TRANSFORMERS_MODEL = torch.load(f, map_location = DEVICE)
                         totalData = totalData.sample(n=int(n_sample))
                         totalData = totalData.drop(['id','date','source','title','author','url','published','published_utc','collection_utc'],axis=1)
@@ -264,7 +264,7 @@ if(models):
                         totalData
                     elif "title" in option: #TITLE
                         if option == "nela-gt-title-roberta":
-                            with open('E:\\pramu\\projects\\ire_final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\nelagt\\nela-gt-title-roberta.pt','rb') as f:
+                            with open('E:\\pramu\\projects\\final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\nelagt\\nela-gt-title-roberta.pt','rb') as f:
                                 PYTORCH_ARTICLE_TRANSFORMERS_MODEL = torch.load(f, map_location = DEVICE)
                             totalData = totalData.sample(n=int(n_sample))
                             totalData = totalData.drop(['id','date','source','content','author','url','published','published_utc','collection_utc'],axis=1)
@@ -282,7 +282,7 @@ if(models):
                     elif option == "rnn_lstm":
                         totalData = totalData.sample(n=int(n_sample))
                         totalData = totalData.drop(['id','date','source','title','author','url','published','published_utc','collection_utc'],axis=1)
-                        new_model = tf.keras.models.load_model('E:\\pramu\\projects\\ire_final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\nelagt\\rnn_lstm_v1.tf')
+                        new_model = tf.keras.models.load_model('E:\\pramu\\projects\\final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\nelagt\\rnn_lstm_v1.tf')
                         totalData["predicted"] = new_model.predict_classes(totalData["content"].tolist())
                         totalData["predicted"] = totalData["predicted"].apply(lambda x : "reliable" if x == 0 else "unreliable")
                         totalData["Reliability"] = totalData["Reliability"].apply(lambda x : "reliable" if x == 0 else "unreliable")
@@ -302,7 +302,7 @@ if(models):
                     totalData = pd.read_csv('../Covid_Constraint_English_Train - Sheet1.csv')
                     totalData = totalData.sample(n=int(n_sample))
                     if option == "covid-roberta":
-                        with open('E:\\pramu\\projects\\ire_final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\covid\\covid-roberta.pt','rb') as f:
+                        with open('E:\\pramu\\projects\\final_project_fake_news_classsification\\Identification-of-fake-news-in-online-news-media\\streamlit\\models\\covid\\covid-roberta.pt','rb') as f:
                             PYTORCH_ARTICLE_TRANSFORMERS_MODEL = torch.load(f, map_location = DEVICE)
                         totalData["Predicted"] = totalData.tweet.apply(article_transformer)
                         totalData["Predicted"] = totalData["Predicted"].apply(lambda x : "real" if x == "FAKE" else "fake")
